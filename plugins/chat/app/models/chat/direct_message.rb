@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 module Chat
-  class DirectMessage < ActiveRecord::Base
+  class DirectMessage < ApplicationRecord
     self.table_name = "direct_message_channels"
 
     include Chatable
 
-    def self.polymorphic_name
-      Chat::Chatable.polymorphic_name_for(self) || super
-    end
+    def self.polymorphic_class_mapping = { "DirectMessage" => Chat::DirectMessage }
 
     has_many :direct_message_users,
              class_name: "Chat::DirectMessageUser",

@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 module Chat
-  class Message < ActiveRecord::Base
+  class Message < ApplicationRecord
     include Trashable
 
     self.table_name = "chat_messages"
 
-    attribute :has_oneboxes, default: false
+    def self.polymorphic_class_mapping = { "ChatMessage" => Chat::Message }
 
     BAKED_VERSION = 2
+
+    attribute :has_oneboxes, default: false
 
     belongs_to :chat_channel, class_name: "Chat::Channel"
     belongs_to :user
@@ -30,35 +32,15 @@ module Chat
              foreign_key: :chat_message_id
     has_many :bookmarks,
              -> {
-               unscope(where: :bookmarkable_type).where(bookmarkable_type: Chat::Message.sti_name)
+               unscope(where: :bookmarkable_type).where(bookmarkable_type: Message.polymorphic_name)
              },
              as: :bookmarkable,
              dependent: :destroy
     has_many :upload_references,
-             -> { unscope(where: :target_type).where(target_type: Chat::Message.sti_name) },
+             -> { unscope(where: :target_type).where(target_type: Message.polymorphic_name) },
              dependent: :destroy,
              foreign_key: :target_id
     has_many :uploads, through: :upload_references, class_name: "::Upload"
-
-    CLASS_MAPPING = { "ChatMessage" => Chat::Message }
-
-    # the model used when loading type column
-    def self.sti_class_for(name)
-      CLASS_MAPPING[name] if CLASS_MAPPING.key?(name)
-    end
-    # the type column value
-    def self.sti_name
-      CLASS_MAPPING.invert.fetch(self)
-    end
-
-    # the model used when loading chatable_type column
-    def self.polymorphic_class_for(name)
-      CLASS_MAPPING[name] if CLASS_MAPPING.key?(name)
-    end
-    # the type stored in *_type column of polymorphic associations
-    def self.polymorphic_name
-      CLASS_MAPPING.invert.fetch(self) || super
-    end
 
     # TODO (martin) Remove this when we drop the ChatUpload table
     has_many :chat_uploads,
@@ -78,21 +60,20 @@ module Chat
           -> {
             joins(:chat_channel).where(
               chat_channel: {
-                chatable_type: Chat::Channel.public_channel_chatable_types,
+                chatable_type: Channel.public_channel_chatable_types,
               },
             )
           }
-
     scope :in_dm_channel,
           -> {
             joins(:chat_channel).where(
               chat_channel: {
-                chatable_type: Chat::Channel.direct_channel_chatable_types,
+                chatable_type: Channel.direct_channel_chatable_types,
               },
             )
           }
-
     scope :created_before, ->(date) { where("chat_messages.created_at < ?", date) }
+    scope :uncooked, -> { where("cooked_version <> ? or cooked_version IS NULL", BAKED_VERSION) }
 
     before_save { ensure_last_editor_id }
 
@@ -130,7 +111,7 @@ module Chat
           {
             upload_id: upload.id,
             target_id: self.id,
-            target_type: self.class.sti_name,
+            target_type: self.class.polymorphic_name,
             created_at: now,
             updated_at: now,
           }
@@ -196,10 +177,6 @@ module Chat
       args[:is_dirty] = true if previous_cooked != new_cooked
 
       Jobs.enqueue(Jobs::Chat::ProcessMessage, args)
-    end
-
-    def self.uncooked
-      where("cooked_version <> ? or cooked_version IS NULL", BAKED_VERSION)
     end
 
     MARKDOWN_FEATURES = %w[
