@@ -7,8 +7,6 @@ module Chat
 
     self.table_name = "chat_messages"
 
-    def self.polymorphic_class_mapping = { "ChatMessage" => Chat::Message }
-
     BAKED_VERSION = 2
 
     attribute :has_oneboxes, default: false
@@ -77,6 +75,8 @@ module Chat
     scope :uncooked, -> { where("cooked_version <> ? or cooked_version IS NULL", BAKED_VERSION) }
 
     before_save { ensure_last_editor_id }
+
+    def self.polymorphic_class_mapping = { "ChatMessage" => Chat::Message }
 
     def validate_message(has_uploads:)
       WatchedWordsValidator.new(attributes: [:message]).validate(self)
