@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module Chat
-  class Channel < ApplicationRecord
+  class Channel < ActiveRecord::Base
     include Trashable
+    include Mappable
 
     self.table_name = "chat_channels"
 
@@ -47,6 +48,8 @@ module Chat
           "CategoryChannel" => Chat::CategoryChannel,
           "DirectMessageChannel" => Chat::DirectMessageChannel,
         }
+
+      def polymorphic_class_mapping = { "DirectMessage" => Chat::DirectMessage }
 
       def editable_statuses
         statuses.filter { |k, _| !%w[read_only archived].include?(k) }

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Chat
-  class ApplicationRecord < ActiveRecord::Base
-    self.abstract_class = true
+  module Mappable
+    extend ActiveSupport::Concern
 
-    class << self
+    class_methods do
       def sti_class_mapping = {}
       def polymorphic_class_mapping = {}
 

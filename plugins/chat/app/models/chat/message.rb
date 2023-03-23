@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module Chat
-  class Message < ApplicationRecord
+  class Message < ActiveRecord::Base
     include Trashable
+    include Mappable
 
     self.table_name = "chat_messages"
 
