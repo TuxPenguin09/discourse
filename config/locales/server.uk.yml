@@ -3764,8 +3764,6 @@ uk:
   offline:
     title: "Неможливо завантажити застосунок"
     offline_page_message: "Схоже, ви офлайн! Перевірте підключення до мережі та повторіть спробу."
-  login_required:
-    welcome_message: "## [Ласкаво просимо до %{title}](#welcome)"
   upload:
     edit_reason: "завантажені локальні копії зображень"
     unauthorized: "На жаль, ви не можете завантажити файл даного типу (список дозволених типів файлів: %{authorized_extensions})."

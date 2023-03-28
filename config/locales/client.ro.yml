@@ -187,12 +187,6 @@ ro:
     software_update_prompt:
       message: "Site-ul a fost actualizat! <span>Reîmprospătează pagina</span>."
       dismiss: "Renunță"
-    bootstrap_mode_enabled:
-      one: "Pentru a simplifica lansarea noului site, sunteți în modul bootstrap. Toți utilizatorii noi vor primi nivelul 1 de încredere și vor avea activată primirea zilnică de e-mail-uri rezumat. Această funcționalitate va fi oprită automat după ce se înregistrează primii %{count} membri."
-      few: "Pentru a simplifica lansarea noului dv. site, sunteți în modul bootstrap. Toți utilizatorii noi vor primi nivelul 1 de încredere și vor avea activată primirea zilnică de e-mail-uri rezumat. Această funcționalitate va fi oprită automat după ce se înregistrează primii %{count} membri."
-      other: "Pentru a simplifica lansarea noului dv. site, sunteți în modul bootstrap. Toți utilizatorii noi vor primi nivelul 1 de încredere și vor avea activată primirea zilnică de e-mail-uri rezumat. Această funcționalitate va fi oprită automat după ce se înregistrează primii %{count} membri."
-    bootstrap_mode_disabled: "Modul bootstrap va fi dezactivat în următoarele 24 de ore"
-    bootstrap_invite_button_title: "Trimite invitații"
     themes:
       default_description: "Implicit"
     s3:
@@ -2941,8 +2935,10 @@ ro:
           save: "Salvare"
           delete: "Șterge"
           links:
-            icon: "Pictogramă"
-            name: "Nume"
+            icon:
+              label: "Pictogramă"
+            name:
+              label: "Nume"
         about:
           header_link_text: "Despre"
         messages:

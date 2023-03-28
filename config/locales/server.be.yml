@@ -1997,8 +1997,6 @@ be:
   offline:
     title: "Не ўдаецца загрузіць дадатак"
     offline_page_message: "Падобна на тое, што вы знаходзіцеся ў аўтаномным рэжыме! Калі ласка, праверце падключэнне да сеткі і паспрабуйце ізноў."
-  login_required:
-    welcome_message: "## [Сардэчна запрашаем% {назву}] (# вітаецца)Рахунак."
   upload:
     edit_reason: "загружаныя лакальныя копіі малюнкаў"
     unauthorized: "Sorry, the file you are trying to upload is not authorized (authorized extensions: %{authorized_extensions})."

@@ -3675,8 +3675,6 @@ fi:
   offline:
     title: "Sovellusta ei voida ladata"
     offline_page_message: "Yhteydessäsi vaikuttaa olevan vikaa! Tarkista verkkoyhteytesi ja yritä uudelleen."
-  login_required:
-    welcome_message: "## [Tervetuloa sivustolle %{title}](#welcome)"
   upload:
     edit_reason: "lataa kuvista paikalliset kopiot"
     unauthorized: "Tiedosto, jota yrität ladata, ei ole sallittu (sallitut päätteet: %{authorized_extensions})."
@@ -4368,13 +4366,18 @@ fi:
         description: "Hyväksy merkintä ja hiljennä käyttäjä."
       agree_and_restore:
         description: "Palauta viesti, niin kaikki käyttäjät näkevät sen."
+      agree_and_hide:
+        title: "Piilota viesti"
       delete_single:
         title: "Poista"
       delete:
         title: "Poista..."
       delete_and_ignore_replies:
         confirm: "Oletko varma, että haluat poistaa myös viestin vastaukset?"
+      delete_and_agree:
+        title: "Poista viesti"
       delete_and_agree_replies:
+        title: "Poista viesti ja vastaukset"
         confirm: "Oletko varma, että haluat poistaa myös viestin vastaukset?"
       disagree_and_restore:
         description: "Palauta viesti, niin kaikki käyttäjät näkevät sen."

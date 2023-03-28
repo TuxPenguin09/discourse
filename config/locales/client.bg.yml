@@ -162,8 +162,6 @@ bg:
     software_update_prompt:
       message: "Актуализирахме този сайт, <span>моля, презаредете</span>, или може да изпитате неочаквано поведение."
       dismiss: "Отмени"
-    bootstrap_mode_disabled: "Режимът на стартиране ще бъде изключен в следващите 24 часа. "
-    bootstrap_invite_button_title: "Изпрати поканите"
     themes:
       default_description: "По подразбиране"
     s3:
@@ -2991,8 +2989,10 @@ bg:
           save: "Запази "
           delete: "Изтрий"
           links:
-            icon: "Икона"
-            name: "Име"
+            icon:
+              label: "Икона"
+            name:
+              label: "Име "
         about:
           header_link_text: "Относно"
         messages:
